@@ -28,6 +28,7 @@ class TV(TMDB):
         'external_ids': '/{id}/external_ids',
         'images': '/{id}/images',
         'latest': '/latest',
+        'changes': '/{id}/changes',
         'rating': '/{id}/rating',
         'similar': '/{id}/similar',
         'recommendations': '/{id}/recommendations',
@@ -221,6 +222,27 @@ class TV(TMDB):
         response = self._GET(path, kwargs)
         self._set_attrs_to_values(response)
         return response
+
+    def changes(self, **kwargs):
+        """Get the changes for a specific movie id.
+
+    Changes are grouped by key, and ordered by date in descending order.
+    By default, only the last 24 hours of changes are returned. The
+    maximum number of days that can be returned in a single request is 14.
+    The language is present on fields that are translatable.
+
+    Args:
+        start_date: (optional) Expected format is 'YYYY-MM-DD'.
+        end_date: (optional) Expected format is 'YYYY-MM-DD'.
+
+    Returns:
+        A dict respresentation of the JSON returned from the API."""
+        path = self._get_id_path('changes')
+
+        response = self._GET(path, kwargs)
+        self._set_attrs_to_values(response)
+        return response
+
 
     def latest(self, **kwargs):
         """
