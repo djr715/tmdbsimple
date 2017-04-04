@@ -3,7 +3,7 @@
 """
 tmdbsimple.tv
 ~~~~~~~~~~~~~
-This module implements the TV, TV Seasons, TV Episodes, and Networks 
+This module implements the TV, TV Seasons, TV Episodes, and Networks
 functionality of tmdbsimple.
 
 Created by Celia Oakley on 2013-10-31.
@@ -27,6 +27,7 @@ class TV(TMDB):
         'credits': '/{id}/credits',
         'external_ids': '/{id}/external_ids',
         'images': '/{id}/images',
+        'latest': '/latest',
         'rating': '/{id}/rating',
         'similar': '/{id}/similar',
         'recommendations': '/{id}/recommendations',
@@ -48,7 +49,7 @@ class TV(TMDB):
 
         Args:
             language: (optional) ISO 639 code.
-            append_to_response: (optional) Comma separated, any TV series 
+            append_to_response: (optional) Comma separated, any TV series
                                 method.
 
         Returns:
@@ -62,12 +63,12 @@ class TV(TMDB):
 
     def credits(self, **kwargs):
         """
-        Get the cast & crew information about a TV series. Just like the 
+        Get the cast & crew information about a TV series. Just like the
         website, we pull this information from the last season of the series.
 
         Args:
             language: (optional) ISO 639 code.
-            append_to_response: (optional) Comma separated, any collection 
+            append_to_response: (optional) Comma separated, any collection
                                 method.
 
         Returns:
@@ -101,7 +102,7 @@ class TV(TMDB):
 
         Args:
             language: (optional) ISO 639 code.
-            include_image_language: (optional) Comma separated, a valid 
+            include_image_language: (optional) Comma separated, a valid
                                     ISO 69-1.
 
         Returns:
@@ -173,7 +174,7 @@ class TV(TMDB):
 
     def translations(self, **kwargs):
         """
-        Get the list of translations that exist for a TV series. These 
+        Get the list of translations that exist for a TV series. These
         translations cascade down to the episode level.
 
         Returns:
@@ -221,6 +222,20 @@ class TV(TMDB):
         self._set_attrs_to_values(response)
         return response
 
+    def latest(self, **kwargs):
+        """
+        Get the latest tv id.
+
+        Returns:
+            A dict respresentation of the JSON returned from the API.
+        """
+        path = self._get_path('latest')
+
+        response = self._GET(path, kwargs)
+        self._set_attrs_to_values(response)
+        return response
+
+
     def airing_today(self, **kwargs):
         """
         Get the list of TV shows that air today. Without a specified timezone,
@@ -242,8 +257,8 @@ class TV(TMDB):
 
     def top_rated(self, **kwargs):
         """
-        Get the list of top rated TV shows. By default, this list will only 
-        include TV shows that have 2 or more votes. This list refreshes every 
+        Get the list of top rated TV shows. By default, this list will only
+        include TV shows that have 2 or more votes. This list refreshes every
         day.
 
         Args:
@@ -303,7 +318,7 @@ class TV_Seasons(TMDB):
 
         Args:
             language: (optional) ISO 639 code.
-            append_to_response: (optional) Comma separated, any TV series 
+            append_to_response: (optional) Comma separated, any TV series
                                 method.
 
         Returns:
@@ -330,7 +345,7 @@ class TV_Seasons(TMDB):
 
     def external_ids(self, **kwargs):
         """
-        Get the external ids that we have stored for a TV season by season 
+        Get the external ids that we have stored for a TV season by season
         number.
 
         Args:
@@ -347,12 +362,12 @@ class TV_Seasons(TMDB):
 
     def images(self, **kwargs):
         """
-        Get the images (posters) that we have stored for a TV season by season 
+        Get the images (posters) that we have stored for a TV season by season
         number.
 
         Args:
             language: (optional) ISO 639 code.
-            include_image_language: (optional) Comma separated, a valid 
+            include_image_language: (optional) Comma separated, a valid
                                     ISO 69-1.
 
         Returns:
@@ -406,12 +421,12 @@ class TV_Episodes(TMDB):
 
     def info(self, **kwargs):
         """
-        Get the primary information about a TV episode by combination of a 
+        Get the primary information about a TV episode by combination of a
         season and episode number.
 
         Args:
             language: (optional) ISO 639 code.
-            append_to_response: (optional) Comma separated, any TV series 
+            append_to_response: (optional) Comma separated, any TV series
                                 method.
 
         Returns:
@@ -438,7 +453,7 @@ class TV_Episodes(TMDB):
 
     def external_ids(self, **kwargs):
         """
-        Get the external ids for a TV episode by combination of a season and 
+        Get the external ids for a TV episode by combination of a season and
         episode number.
 
         Args:
@@ -456,8 +471,8 @@ class TV_Episodes(TMDB):
 
     def images(self, **kwargs):
         """
-        Get the images (episode stills) for a TV episode by combination of a 
-        season and episode number. Since episode stills don't have a language, 
+        Get the images (episode stills) for a TV episode by combination of a
+        season and episode number. Since episode stills don't have a language,
         this call will always return all images.
 
         Returns:
@@ -527,8 +542,8 @@ class Networks(TMDB):
 
     def info(self, **kwargs):
         """
-        This method is used to retrieve the basic information about a TV 
-        network. You can use this ID to search for TV shows with the discover. 
+        This method is used to retrieve the basic information about a TV
+        network. You can use this ID to search for TV shows with the discover.
         At this time we don't have much but this will be fleshed out over time.
 
         Returns:
