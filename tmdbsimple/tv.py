@@ -224,7 +224,7 @@ class TV(TMDB):
         return response
 
     def changes(self, **kwargs):
-        """Get the changes for a specific movie id.
+        """Get the changes for a specific tv id.
 
     Changes are grouped by key, and ordered by date in descending order.
     By default, only the last 24 hours of changes are returned. The
